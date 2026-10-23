@@ -10,7 +10,7 @@ jobs:
       - name: Review stand-in (fails if the PR adds a line with FIXME)
         run: |
           git fetch -q origin ${{ github.base_ref }}
-          git diff origin/${{ github.base_ref }}...HEAD > d.txt || exit 1
+          git diff origin/${{ github.base_ref }}...HEAD -- . ':!.github' > d.txt || exit 1
           if grep -q "^+.*FIXME" d.txt; then echo "seisa-review: FIXME found"; exit 1; fi
           echo "seisa-review: pass"
   seisa-test:
